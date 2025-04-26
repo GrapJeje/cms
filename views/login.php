@@ -1,7 +1,10 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <?php require __DIR__ . '/../app/includes/head.php'; ?>
+    <?php
+    require __DIR__ . '/../app/includes/head.php';
+    require_once __DIR__ . '/../app/Config/config.php';
+    ?>
     <title>Cms - Login</title>
     <link rel="stylesheet" href="public/css/auth.css">
 </head>
@@ -16,7 +19,8 @@
             <div class="login-message"><?= htmlspecialchars($_GET['msg']) ?></div>
         <?php endif; ?>
 
-        <form action="/authenticate" method="POST" class="login-form">
+        <form action="app/Http/Controllers/AuthController.php" method="POST" class="login-form">
+            <input type="hidden" name="action" value="login">
             <div class="form-group">
                 <label for="email">E-mailadres</label>
                 <input type="email" id="email" name="email" required placeholder="jij@example.com">
@@ -31,7 +35,7 @@
         </form>
 
         <div class="login-footer">
-            <p>Nog geen account? <a href="/register">Registreer hier</a></p>
+            <p>Nog geen account? <a href="<?= ROOT_PATH . "/register" ?>">Registreer hier</a></p>
         </div>
     </section>
 </main>

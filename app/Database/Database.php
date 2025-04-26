@@ -11,7 +11,7 @@ class Database {
     public static function getConnection(): PDO {
         if (self::$pdo === null) {
             global $dbHost, $dbName, $dbUser, $dbPass;
-            require 'config.php';
+            require __DIR__ . '/../Config/config.php';
 
             try {
                 self::$pdo = new PDO(
@@ -140,10 +140,10 @@ class Database {
         }
     }
 
-    public static function addUser($table, $data): int {
+    public static function addUser($data): int {
         $pdo = self::getConnection();
         if (empty($data)) return false;
-        self::add($table, $data);
+        self::add('users', $data);
         return $pdo->lastInsertId();
     }
 }
