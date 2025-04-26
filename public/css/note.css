@@ -1,0 +1,31 @@
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.note-card {
+    position: relative;
+    background: #fffa65;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    transform: rotate(-2deg);
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 150px;
+}
+
+.note-card:nth-child(even) {
+    transform: rotate(2deg);
+}
+
+.note-card:hover {
+    transform: scale(1.03) rotate(0deg);
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.note-card p {
+    font-size: 1rem;
+    line-height: 1.5;
+    word-break: break-word;
+}

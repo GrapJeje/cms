@@ -18,6 +18,7 @@ CREATE TABLE notes
     user_id    INT  NOT NULL,
     content    TEXT NOT NULL,
     priority   TINYINT(1) NOT NULL DEFAULT 2,
+    color      VARCHAR(7) NOT NULL DEFAULT '#FFFFFF',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
