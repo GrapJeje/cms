@@ -5,15 +5,14 @@ global$notes;
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <title>Mini Notitie CMS</title>
-    <link rel="stylesheet" href="public/css/style.css">
+    <?php require ROOT_PATH . '/app/includes/head.php'; ?>
+    <title>Cms - De Notitie Manager</title>
 </head>
 <body>
 
 <main class="container">
     <header>
-        <h1>Cms - De Notitie manager</h1>
+        <h1>Cms - De Notitie Manager</h1>
     </header>
 
     <section class="form-section">
@@ -25,7 +24,10 @@ global$notes;
 
     <section id="notes" class="notes-grid">
         <?php if (empty($notes)): ?>
-            <p class="no-notes">Geen notities gevonden. Voeg er een toe!</p>
+            <article class="note-card">
+                <p>Geen notities gevonden. Voeg er een toe!</p>
+                <button class="delete-btn" ">Toevoegen</button>
+            </article>
         <?php else: ?>
         <?php foreach ($notes as $index => $note): ?>
             <article class="note-card">

@@ -40,6 +40,23 @@ class Database {
         }
     }
 
+    public static function allByUserId($table, $userId): array {
+        $pdo = self::getConnection();
+
+        if (empty($userId)) return [];
+
+        try {
+            // Voeg userId toe aan de conditions
+            $stmt = $pdo->prepare("SELECT * FROM `$table` WHERE `userId` = :userId");
+            $stmt->execute(['userId' => $userId]);
+
+            $result = $stmt->fetchAll();
+            return empty($result) ? [] : (count($result) === 1 ? $result[0] : $result);
+        } catch (PDOException $e) {
+            return [];
+        }
+    }
+
     public static function get($table, $conditions): array {
         $pdo = self::getConnection();
         if (empty($conditions)) return false;
