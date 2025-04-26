@@ -1,0 +1,23 @@
+CREATE
+DATABASE IF NOT EXISTS cms DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE
+cms;
+
+CREATE TABLE users
+(
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    email      VARCHAR(255) NOT NULL UNIQUE,
+    password   VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE notes
+(
+    id         INT AUTO_INCREMENT PRIMARY KEY,
+    user_id    INT  NOT NULL,
+    content    TEXT NOT NULL,
+    priority   TINYINT(1) NOT NULL DEFAULT 2,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+);

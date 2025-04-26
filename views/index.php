@@ -13,7 +13,7 @@ global$notes;
 
 <main class="container">
     <header>
-        <h1>Mijn Notities</h1>
+        <h1>Cms - De Notitie manager</h1>
     </header>
 
     <section class="form-section">
