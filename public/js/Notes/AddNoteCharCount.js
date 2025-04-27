@@ -6,5 +6,5 @@ noteInput.addEventListener('input', () => {
     charCount.textContent = `${length}/100`;
 
     if (length > 100) charCount.style.color = 'red';
-    else charCount.style.color = '#666';
+    else charCount.style.color = '#6c757d';
 });

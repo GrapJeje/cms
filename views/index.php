@@ -28,17 +28,17 @@ global $notes, $user;
     </header>
 
     <section class="form-section">
-        <form id="noteForm" autocomplete="off" action="app/Http/Controllers/NoteController.php" method="POST">
+        <form class="note-form" autocomplete="off" action="app/Http/Controllers/NoteController.php" method="POST">
             <input type="hidden" name="action" value="add">
             <div class="input-wrapper">
-                <input type="text" id="noteInput" name="noteInput" placeholder="Typ een nieuwe notitie..." maxlength="100" required>
-                <div id="charCount">0/100</div>
+                <input type="text" id="noteInput" class="note-input" name="noteInput" placeholder="Typ een nieuwe notitie..." maxlength="100" required>
+                <div id="charCount" class="char-count">0/100</div>
             </div>
-            <button type="submit">Toevoegen</button>
+            <button type="submit" class="submit-btn">Toevoegen</button>
         </form>
     </section>
 
-    <section id="notes" class="notes-grid">
+    <section class="notes-grid">
         <?php if (empty($notes)): ?>
             <article class="note-card">
                 <p>Geen notities gevonden. Voeg er een toe!</p>
@@ -50,28 +50,24 @@ global $notes, $user;
 
                     <div class="priority-container">
                         <div class="priority-bar">
-                            <?php
-                            for ($i = 1; $i <= 3; $i++):
-                                echo $i <= $note['priority'] ? '<div class="priority-line active"></div>' : '<div class="priority-line"></div>';
-                            endfor;
-                            ?>
+                            <?php for ($i = 1; $i <= 3; $i++):
+                                echo $i <= $note['priority']
+                                    ? '<div class="priority-line active priority-' . $note['priority'] . '"></div>'
+                                    : '<div class="priority-line"></div>';
+                            endfor; ?>
                         </div>
                     </div>
                     <div class="note-buttons">
-                        <form action="app/Http/Controllers/NoteController.php" method="POST">
-                            <input type="hidden" name="action" value="edit">
+                        <form action="app/Http/Controllers/NoteController.php" method="POST" style="display: flex; gap: 0.5rem; width: 100%;">
                             <input type="hidden" name="noteId" value="<?= $note['id']; ?>">
-                            <button class="edit-btn" data-index="<?= $index; ?>">Edit!</button>
-                        </form>
 
-                        <form action="app/Http/Controllers/NoteController.php" method="POST">
-                            <input type="hidden" name="action" value="done">
-                            <input type="hidden" name="noteId" value="<?= $note['id']; ?>">
-                            <button class="delete-btn" data-index="<?= $index; ?>">Klaar!</button>
+                            <button type="submit" name="action" value="edit" class="edit-btn" style="flex: 1;">Edit!</button>
+                            <button type="submit" name="action" value="done" class="delete-btn" style="flex: 1;">Klaar!</button>
                         </form>
                     </div>
                 </article>
-            <?php endforeach; endif; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </section>
 </main>
 
