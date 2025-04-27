@@ -10,6 +10,8 @@
 </head>
 
 <body class="login-body">
+<?php require 'Sections/Alert.php'; ?>
+
 <main class="login-container">
     <section class="login-card">
         <h1>Welkom!</h1>

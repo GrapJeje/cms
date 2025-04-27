@@ -10,15 +10,12 @@ body {
     font-family: system-ui, sans-serif;
     background-color: #f9f9f9;
     min-height: 100vh;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 40px 20px;
 }
 
 .container {
     width: 100%;
     max-width: 1200px;
+    margin: 0 auto;
 }
 
 header {
@@ -36,14 +33,31 @@ header {
 #noteForm {
     display: flex;
     gap: 10px;
+    align-items: center; /* zorgt dat alles netjes in het midden staat */
+}
+
+.input-wrapper {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
 }
 
 #noteInput {
-    flex-grow: 1;
+    width: 100%;
     padding: 12px 16px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 8px;
+    padding-right: 70px; /* ruimte maken voor de teller */
+}
+
+#charCount {
+    position: absolute;
+    right: 16px;
+    font-size: 0.9rem;
+    color: #666;
+    pointer-events: none;
 }
 
 #noteForm button {
@@ -52,6 +66,7 @@ header {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+    white-space: nowrap; /* zodat de knop niet afbreekt */
 }
 
 .priority-container {

@@ -24,7 +24,7 @@ class AuthController
                 $this->register();
                 break;
             default:
-                header("Location:" . ROOT_PATH . "/?msg=Invalid auth action");
+                header("Location:" . ROOT_PATH . "/?alert=Invalid auth action");
                 exit();
         }
     }
@@ -53,7 +53,7 @@ class AuthController
 
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['user_name'] = $user['name'];
-        header("Location: " . ROOT_PATH . "/?msg=Ingelogd");
+        header("Location: " . ROOT_PATH . "/?alert=Succesvol ingelogd");
         exit();
     }
 
@@ -63,7 +63,7 @@ class AuthController
         session_unset();
         session_destroy();
 
-        header("Location: " . ROOT_PATH . "/login?msg=U bent uitgelogd");
+        header("Location: " . ROOT_PATH . "/login?alert=U bent uitgelogd");
         exit();
     }
 
@@ -96,7 +96,7 @@ class AuthController
             'password' => $hashedPassword
         ]);
 
-        header("Location: " . ROOT_PATH . "/?msg=Registratie succesvol");
+        header("Location: " . ROOT_PATH . "/?alert=Registratie succesvol");
         $this->login();
         exit();
     }

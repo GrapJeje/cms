@@ -21,7 +21,7 @@ class NoteController
                 $this->done();
                 break;
             default:
-                header("Location:" . ROOT_PATH . "/?msg=Invalid note action");
+                header("Location:" . ROOT_PATH . "/?alert=Invalid note action");
                 exit();
         }
     }
@@ -31,13 +31,18 @@ class NoteController
         $message = $_POST['noteInput'] ?? '';
 
         if (empty($message)) {
-            header("Location:" . ROOT_PATH . "/?msg=Vul alle velden in");
+            header("Location:" . ROOT_PATH . "/?alert=Vul alle velden in");
             exit();
         }
 
         $userId = $_SESSION['user_id'] ?? null;
         if (empty($userId)) {
-            header("Location:" . ROOT_PATH . "/?msg=Je moet ingelogd zijn om een notitie toe te voegen");
+            header("Location:" . ROOT_PATH . "/?alert=Je moet ingelogd zijn om een notitie toe te voegen");
+            exit();
+        }
+
+        if (strlen($message) > 100) {
+            header("Location:" . ROOT_PATH . "/?alert=Notitie mag maximaal 100 karakters zijn");
             exit();
         }
 
@@ -46,7 +51,7 @@ class NoteController
             'content' => $message
         ]);
 
-        header("Location:" . ROOT_PATH . "/?msg=Notitie toegevoegd");
+        header("Location:" . ROOT_PATH . "/?alert=Notitie toegevoegd");
     }
 
     private function done()
@@ -54,13 +59,13 @@ class NoteController
         $noteId = $_POST['noteId'] ?? null;
 
         if (empty($noteId)) {
-            header("Location:" . ROOT_PATH . "/?msg=Geen notitie opgegeven");
+            header("Location:" . ROOT_PATH . "/?alert=Geen notitie opgegeven");
             exit();
         }
 
         Database::delete('notes', ['id' => $noteId]);
 
-        header("Location:" . ROOT_PATH . "/?msg=Notitie verwijderd");
+        header("Location:" . ROOT_PATH . "/?alert=Notitie verwijderd");
         exit();
     }
 }

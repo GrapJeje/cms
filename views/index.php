@@ -10,29 +10,30 @@ global $notes, $user;
     require __DIR__ . '/../app/includes/head.php';
     ?>
     <title>Cms - De Notitie Manager</title>
-    <link rel="stylesheet" href="<?= ROOT_PATH ?>/public/css/note.css">
-    <link rel="stylesheet" href="<?= ROOT_PATH ?>/public/css/profile.css">
+    <link rel="stylesheet" href="<?= ROOT_PATH; ?>/public/css/note.css">
+    <link rel="stylesheet" href="<?= ROOT_PATH; ?>/public/css/Sections/profile.css">
 </head>
 <body>
+
+<?php require 'Sections/Alert.php'; ?>
 
 <main class="container">
     <header>
         <h1>Cms - De Notitie Manager</h1>
         <div class="profile-container">
             <p>Welkom, <?= ucfirst($user['name']); ?>!</p>
-            <img src="<?= ROOT_PATH ?>/public/images/profile-picture.png" alt="Profiel" class="profile-icon">
+            <img src="<?= ROOT_PATH; ?>/public/images/profile-picture.png" alt="Profiel" class="profile-icon">
             <?php require 'Sections/Profile.php'; ?>
         </div>
     </header>
 
-    <?php if (isset($_GET['msg'])): ?>
-        <div class="login-message"><?= htmlspecialchars($_GET['msg']) ?></div>
-    <?php endif; ?>
-
     <section class="form-section">
         <form id="noteForm" autocomplete="off" action="app/Http/Controllers/NoteController.php" method="POST">
             <input type="hidden" name="action" value="add">
-            <input type="text" id="noteInput" name="noteInput" placeholder="Typ een nieuwe notitie..." required>
+            <div class="input-wrapper">
+                <input type="text" id="noteInput" name="noteInput" placeholder="Typ een nieuwe notitie..." maxlength="100" required>
+                <div id="charCount">0/100</div>
+            </div>
             <button type="submit">Toevoegen</button>
         </form>
     </section>
@@ -59,14 +60,14 @@ global $notes, $user;
                     <div class="note-buttons">
                         <form action="app/Http/Controllers/NoteController.php" method="POST">
                             <input type="hidden" name="action" value="edit">
-                            <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
-                            <button class="edit-btn" data-index="<?= $index ?>">Edit!</button>
+                            <input type="hidden" name="noteId" value="<?= $note['id']; ?>">
+                            <button class="edit-btn" data-index="<?= $index; ?>">Edit!</button>
                         </form>
 
                         <form action="app/Http/Controllers/NoteController.php" method="POST">
                             <input type="hidden" name="action" value="done">
-                            <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
-                            <button class="delete-btn" data-index="<?= $index ?>">Klaar!</button>
+                            <input type="hidden" name="noteId" value="<?= $note['id']; ?>">
+                            <button class="delete-btn" data-index="<?= $index; ?>">Klaar!</button>
                         </form>
                     </div>
                 </article>
@@ -75,6 +76,7 @@ global $notes, $user;
 </main>
 
 <script src="public/js/Profile.js"></script>
+<script src="public/js/Notes/AddNoteCharCount.js"></script>
 
 </body>
 </html>
