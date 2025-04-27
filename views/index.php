@@ -63,7 +63,7 @@ global $notes, $user;
                         <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
                         <input type="hidden" name="action" value="edit">
 
-                        <textarea name="noteInput" class="edit-input"
+                        <textarea name="noteInput" class="edit-input" maxlength="100"
                                   required><?= htmlspecialchars($note['content']) ?></textarea>
 
                         <div class="edit-controls">

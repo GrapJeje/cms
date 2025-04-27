@@ -89,6 +89,11 @@ class NoteController
             exit();
         }
 
+        if (strlen($content) > 100) {
+            header("Location:" . ROOT_PATH . "/?alert=Notitie mag maximaal 100 karakters zijn");
+            exit();
+        }
+
         $priority = max(1, min(3, $priority));
         if (!preg_match('/^#[a-f0-9]{6}$/i', $color)) $color = '#FFF9C4';
 
