@@ -31,7 +31,8 @@ global $notes, $user;
         <form class="note-form" autocomplete="off" action="app/Http/Controllers/NoteController.php" method="POST">
             <input type="hidden" name="action" value="add">
             <div class="input-wrapper">
-                <input type="text" id="noteInput" class="note-input" name="noteInput" placeholder="Typ een nieuwe notitie..." maxlength="100" required>
+                <input type="text" id="noteInput" class="note-input" name="noteInput"
+                       placeholder="Typ een nieuwe notitie..." maxlength="100" required>
                 <div id="charCount" class="char-count">0/100</div>
             </div>
             <button type="submit" class="submit-btn">Toevoegen</button>
@@ -46,7 +47,6 @@ global $notes, $user;
         <?php else: ?>
             <?php foreach ($notes as $index => $note): ?>
                 <article class="note-card" style="background-color: <?= $note['color'] ?>">
-                    <!-- Read Mode -->
                     <div class="note-content">
                         <p><?= htmlspecialchars($note['content']) ?></p>
                         <div class="priority-container">
@@ -58,19 +58,21 @@ global $notes, $user;
                         </div>
                     </div>
 
-                    <!-- Edit Mode -->
-                    <form class="edit-form" action="app/Http/Controllers/NoteController.php" method="POST">
+                    <form class="edit-form" action="<?= ROOT_PATH ?>/app/Http/Controllers/NoteController.php"
+                          method="POST">
                         <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
                         <input type="hidden" name="action" value="edit">
 
-                        <textarea name="noteInput" class="edit-input" required><?= htmlspecialchars($note['content']) ?></textarea>
+                        <textarea name="noteInput" class="edit-input"
+                                  required><?= htmlspecialchars($note['content']) ?></textarea>
 
                         <div class="edit-controls">
                             <div class="priority-selector">
                                 <label>Prioriteit:</label>
                                 <div class="priority-options">
                                     <?php for ($i = 1; $i <= 3; $i++): ?>
-                                        <button type="button" class="priority-option <?= $i <= $note['priority'] ? 'active' : '' ?>"
+                                        <button type="button"
+                                                class="priority-option <?= $i <= $note['priority'] ? 'active' : '' ?>"
                                                 data-value="<?= $i ?>">
                                             <?= str_repeat('★', $i) ?>
                                         </button>
@@ -92,7 +94,8 @@ global $notes, $user;
                                         '#FFF3E0' => 'Oranje'
                                     ];
                                     foreach ($colors as $hex => $name): ?>
-                                        <button type="button" class="color-option <?= $hex === $note['color'] ? 'active' : '' ?>"
+                                        <button type="button"
+                                                class="color-option <?= $hex === $note['color'] ? 'active' : '' ?>"
                                                 data-value="<?= $hex ?>" style="background-color: <?= $hex ?>">
                                         </button>
                                     <?php endforeach; ?>

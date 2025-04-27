@@ -1,24 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.edit-btn').forEach(button => {
-        button.addEventListener('click', function (e) {
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('edit-btn')) {
             e.preventDefault();
-            const noteCard = this.closest('.note-card');
+            const noteCard = e.target.closest('.note-card');
             noteCard.classList.add('edit-mode');
-        });
+        }
     });
 
-    document.querySelectorAll('.cancel-edit-btn').forEach(button => {
-        button.addEventListener('click', function (e) {
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('cancel-edit-btn')) {
             e.preventDefault();
-            const noteCard = this.closest('.note-card');
+            const noteCard = e.target.closest('.note-card');
             noteCard.classList.remove('edit-mode');
-        });
+        }
     });
 
-    document.querySelectorAll('.priority-option').forEach(button => {
-        button.addEventListener('click', function () {
-            const value = this.dataset.value;
-            const container = this.closest('.priority-options');
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('priority-option')) {
+            const value = e.target.dataset.value;
+            const container = e.target.closest('.priority-options');
 
             container.querySelectorAll('.priority-option').forEach(opt => {
                 opt.classList.remove('active');
@@ -28,20 +28,20 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             container.querySelector('input[name="priority"]').value = value;
-        });
+        }
     });
 
-    document.querySelectorAll('.color-option').forEach(button => {
-        button.addEventListener('click', function () {
-            const value = this.dataset.value;
-            const container = this.closest('.color-options');
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('color-option')) {
+            const value = e.target.dataset.value;
+            const container = e.target.closest('.color-options');
 
             container.querySelectorAll('.color-option').forEach(opt => {
                 opt.classList.remove('active');
             });
-            this.classList.add('active');
+            e.target.classList.add('active');
 
             container.querySelector('input[name="color"]').value = value;
-        });
+        }
     });
 });

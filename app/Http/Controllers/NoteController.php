@@ -76,11 +76,11 @@ class NoteController
     {
         $noteId = $_POST['noteId'] ?? null;
         $content = $_POST['noteInput'] ?? '';
-        $priority = $_POST['priority'] ?? 1;
+        $priority = (int)($_POST['priority'] ?? 1);
         $color = $_POST['color'] ?? '#FFF9C4';
 
         if (empty($noteId)) {
-            header("Location:" . ROOT_PATH . "/?alert=Geen notitie opgegeven");
+            header("Location:" . ROOT_PATH . "/?alert=Notitie niet gevonden");
             exit();
         }
 
@@ -89,20 +89,18 @@ class NoteController
             exit();
         }
 
-        $priority = max(1, min(3, (int)$priority));
+        $priority = max(1, min(3, $priority));
+        if (!preg_match('/^#[a-f0-9]{6}$/i', $color)) $color = '#FFF9C4';
 
-        if (!preg_match('/^#[a-f0-9]{6}$/i', $color)) {
-            $color = '#FFF9C4';
-        }
-
-        Database::update('notes', [
+        $updated = Database::update('notes', [
             'content' => htmlspecialchars($content, ENT_QUOTES),
             'priority' => $priority,
-            'color' => $color,
-            'updated_at' => date('Y-m-d H:i:s')
+            'color' => $color
         ], ['id' => $noteId]);
 
-        header("Location:" . ROOT_PATH . "/?alert=Notitie bijgewerkt");
+        if ($updated) header("Location:" . ROOT_PATH . "/?alert=Notitie bijgewerkt");
+        else header("Location:" . ROOT_PATH . "/?alert=Kon notitie niet bijwerken");
+
         exit();
     }
 }
