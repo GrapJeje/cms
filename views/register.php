@@ -6,7 +6,7 @@
     require_once __DIR__ . '/../app/Config/config.php';
     ?>
     <title>Cms - Register</title>
-    <link rel="stylesheet" href="public/css/auth.css">
+    <link rel="stylesheet" href="<?= ROOT_PATH; ?>public/css/auth.css">
 </head>
 
 <body>
