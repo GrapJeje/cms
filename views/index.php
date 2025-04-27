@@ -21,12 +21,7 @@ global $notes, $user;
         <div class="profile-container">
             <p>Welkom, <?= ucfirst($user['name']); ?>!</p>
             <img src="<?= ROOT_PATH ?>/public/images/profile-picture.png" alt="Profiel" class="profile-icon">
-            <div class="logout-card" id="logoutCard">
-                <form method="POST" action="app/Http/Controllers/AuthController.php">
-                    <input type="hidden" name="action" value="logout">
-                    <button type="submit" class="logout-btn">Uitloggen</button>
-                </form>
-            </div>
+            <?php require 'Sections/Profile.php'; ?>
         </div>
     </header>
 
