@@ -46,12 +46,11 @@ class Database {
         if (empty($userId)) return [];
 
         try {
-            // Voeg userId toe aan de conditions
-            $stmt = $pdo->prepare("SELECT * FROM `$table` WHERE `userId` = :userId");
+            $stmt = $pdo->prepare("SELECT * FROM `$table` WHERE `user_id` = :userId");
             $stmt->execute(['userId' => $userId]);
 
-            $result = $stmt->fetchAll();
-            return empty($result) ? [] : (count($result) === 1 ? $result[0] : $result);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result ?: [];
         } catch (PDOException $e) {
             return [];
         }

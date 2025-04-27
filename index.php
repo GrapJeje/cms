@@ -7,7 +7,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use App\Database\Database;
 
-$notes = Database::all('notes');
+$notes = Database::allByUserId('notes', $_SESSION['user_id']);
 $notes = $notes ?: [];
 
 if (!$_SESSION['user_id'] ?? null) {

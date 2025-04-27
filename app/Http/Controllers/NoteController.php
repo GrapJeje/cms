@@ -20,6 +20,9 @@ class NoteController
             case 'done':
                 $this->done();
                 break;
+            case 'edit':
+                $this->edit();
+                break;
             default:
                 header("Location:" . ROOT_PATH . "/?alert=Invalid note action");
                 exit();
@@ -66,6 +69,40 @@ class NoteController
         Database::delete('notes', ['id' => $noteId]);
 
         header("Location:" . ROOT_PATH . "/?alert=Notitie verwijderd");
+        exit();
+    }
+
+    private function edit()
+    {
+        $noteId = $_POST['noteId'] ?? null;
+        $content = $_POST['noteInput'] ?? '';
+        $priority = $_POST['priority'] ?? 1;
+        $color = $_POST['color'] ?? '#FFF9C4';
+
+        if (empty($noteId)) {
+            header("Location:" . ROOT_PATH . "/?alert=Geen notitie opgegeven");
+            exit();
+        }
+
+        if (empty($content)) {
+            header("Location:" . ROOT_PATH . "/?alert=Notitie mag niet leeg zijn");
+            exit();
+        }
+
+        $priority = max(1, min(3, (int)$priority));
+
+        if (!preg_match('/^#[a-f0-9]{6}$/i', $color)) {
+            $color = '#FFF9C4';
+        }
+
+        Database::update('notes', [
+            'content' => htmlspecialchars($content, ENT_QUOTES),
+            'priority' => $priority,
+            'color' => $color,
+            'updated_at' => date('Y-m-d H:i:s')
+        ], ['id' => $noteId]);
+
+        header("Location:" . ROOT_PATH . "/?alert=Notitie bijgewerkt");
         exit();
     }
 }

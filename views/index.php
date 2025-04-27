@@ -46,23 +46,73 @@ global $notes, $user;
         <?php else: ?>
             <?php foreach ($notes as $index => $note): ?>
                 <article class="note-card" style="background-color: <?= $note['color'] ?>">
-                    <p><?= htmlspecialchars($note['content']) ?></p>
-
-                    <div class="priority-container">
-                        <div class="priority-bar">
-                            <?php for ($i = 1; $i <= 3; $i++):
-                                echo $i <= $note['priority']
-                                    ? '<div class="priority-line active priority-' . $note['priority'] . '"></div>'
-                                    : '<div class="priority-line"></div>';
-                            endfor; ?>
+                    <!-- Read Mode -->
+                    <div class="note-content">
+                        <p><?= htmlspecialchars($note['content']) ?></p>
+                        <div class="priority-container">
+                            <div class="priority-bar">
+                                <?php for ($i = 1; $i <= 3; $i++): ?>
+                                    <div class="priority-line <?= $i <= $note['priority'] ? 'active priority-' . $note['priority'] : '' ?>"></div>
+                                <?php endfor; ?>
+                            </div>
                         </div>
                     </div>
-                    <div class="note-buttons">
-                        <form action="app/Http/Controllers/NoteController.php" method="POST" style="display: flex; gap: 0.5rem; width: 100%;">
-                            <input type="hidden" name="noteId" value="<?= $note['id']; ?>">
 
-                            <button type="submit" name="action" value="edit" class="edit-btn" style="flex: 1;">Edit!</button>
-                            <button type="submit" name="action" value="done" class="delete-btn" style="flex: 1;">Klaar!</button>
+                    <!-- Edit Mode -->
+                    <form class="edit-form" action="app/Http/Controllers/NoteController.php" method="POST">
+                        <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
+                        <input type="hidden" name="action" value="edit">
+
+                        <textarea name="noteInput" class="edit-input" required><?= htmlspecialchars($note['content']) ?></textarea>
+
+                        <div class="edit-controls">
+                            <div class="priority-selector">
+                                <label>Prioriteit:</label>
+                                <div class="priority-options">
+                                    <?php for ($i = 1; $i <= 3; $i++): ?>
+                                        <button type="button" class="priority-option <?= $i <= $note['priority'] ? 'active' : '' ?>"
+                                                data-value="<?= $i ?>">
+                                            <?= str_repeat('★', $i) ?>
+                                        </button>
+                                    <?php endfor; ?>
+                                    <input type="hidden" name="priority" value="<?= $note['priority'] ?>">
+                                </div>
+                            </div>
+
+                            <div class="color-selector">
+                                <label>Kleur:</label>
+                                <div class="color-options">
+                                    <?php
+                                    $colors = [
+                                        '#FFF9C4' => 'Geel',
+                                        '#E3F2FD' => 'Blauw',
+                                        '#E8F5E9' => 'Groen',
+                                        '#FCE4EC' => 'Roze',
+                                        '#F3E5F5' => 'Paars',
+                                        '#FFF3E0' => 'Oranje'
+                                    ];
+                                    foreach ($colors as $hex => $name): ?>
+                                        <button type="button" class="color-option <?= $hex === $note['color'] ? 'active' : '' ?>"
+                                                data-value="<?= $hex ?>" style="background-color: <?= $hex ?>">
+                                        </button>
+                                    <?php endforeach; ?>
+                                    <input type="hidden" name="color" value="<?= $note['color'] ?>">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="edit-buttons">
+                            <button type="button" class="cancel-edit-btn">Annuleren</button>
+                            <button type="submit" class="save-edit-btn">Opslaan</button>
+                        </div>
+                    </form>
+
+                    <div class="note-buttons">
+                        <button class="edit-btn">Bewerk</button>
+                        <form action="app/Http/Controllers/NoteController.php" method="POST">
+                            <input type="hidden" name="noteId" value="<?= $note['id'] ?>">
+                            <input type="hidden" name="action" value="done">
+                            <button type="submit" class="delete-btn">Klaar!</button>
                         </form>
                     </div>
                 </article>
@@ -73,6 +123,7 @@ global $notes, $user;
 
 <script src="public/js/Profile.js"></script>
 <script src="public/js/Notes/AddNoteCharCount.js"></script>
+<script src="public/js/Notes/EditNoteCard.js"></script>
 
 </body>
 </html>
